@@ -1,127 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina con Mascotte</title>
+    <title>Form Cena 100 Giorni</title>
     <style>
+        .domanda{
+            text-align: center;
+            padding-left: auto;
+            font-size: 20px;
+        }
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: url('ping1.gif') center/cover fixed no-repeat;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            font-family: 'Pacifico', cursive;
-            background-image: url('nyan.gif');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;
+            height: auto;
+            width: auto;
         }
 
-        #mascotContainer {
-            position: relative;
-            cursor: pointer;
-            text-align: center;
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(86, 102, 243, 1);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
-        #mascot {
-            width: 400px;
-            height: 300px;
-            position: relative;
+        h1 {
+            color: #000000;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
-        #mascotText {
-            position: absolute;
-            top: -60px;
-            right: 10px;
-            padding: 10px;
-            background-color: rgba(142, 255, 164, 0.8);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
+        label {
+            display: block;
+            margin-top: 20px;
             font-size: 18px;
-            color: #333;
-            white-space: nowrap;
-            z-index: 1;
+            color: #000000;
         }
 
-        #centerButton {
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        input[type="radio"] {
             display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ff3333;
-            color: #fff;
-            padding: 50px 100px;
-            border: none;
-            border-radius: 10px;
+        }
+
+        label[for="si"], label[for="no"] {
+            flex: 1;
+            position: relative;
             cursor: pointer;
-            z-index: 2;
-            font-size: 44px;
-            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            color: #000000;
+            text-align: center;
+            margin-bottom: 5px; /* Spazio tra "SI"/"NO" e le caselle di selezione */
+        }
+
+        label[for="si"]::before, label[for="no"]::before {
+            content: "";
+            display: block;
+            margin: 0 auto 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+        }
+
+        input[type="radio"]:checked + label::before {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #rispostaInviata {
+            color: #ffffff;
+            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenitore della Mascotte -->
-    <div id="mascotContainer" onclick="changeText()">
-        <!-- Mascotte -->
-        <img id="mascot" src="MASKOT.png" alt="Mascotte" onerror="displayFallbackMessage()">
+    <form action="#" method="post" onsubmit="return inviaForm(this);">
+        <h1>Compila il Form</h1>
 
-        <!-- Testo sopra la Mascotte -->
-        <div id="mascotText">
-            <span>Ciao! Sono la mascotte</span>
-            <span>ORIGINALE dei 100 giorni 5CINF.</span>
-            <span>Benvenuto sul mio sito!</span>
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" name="cognome" required>
+
+        <label for="classe">Classe:</label>
+        <input type="text" id="classe" name="classe" required>
+        
+        <div class="domanda"> Vuole venire alla cena dei 100 giorni con noi?</div>
+
+        <div>
+            <input type="radio" id="si" name="partecipazione" value="si" required>
+            <label for="si">SI</label>
+            
+            <input type="radio" id="no" name="partecipazione" value="no" required>
+            <label for="no">NO</label>
         </div>
-    </div>
 
-    <!-- Bottone al centro -->
-    <button id="centerButton" onclick="redirectToNextPage()">Continua</button>
+        <input type="submit" value="Invia">
+        <div id="rispostaInviata"></div>
 
-    <script>
-        var messages = [
-            '<span>Questo è solo un test per capire se sei umana e la prof che cerco. (cliccami ancora)</span>',
-            '<span>Se sei pronta a continuare, <br>clicca il bottone rosso al centro. (difficile da ignorare)</span>',
-            '<span>Smettila di cliccare.</span>',
-            '<span>Stai perdendo la dignità.</span>',
-            '<span>Ho deciso che da ora ti ignoro.</span>',
-        ];
+        <script>
+            function inviaForm(form) {
+                // Verifica se tutti i campi sono compilati
+                var cognome = form.cognome.value.trim();
+                var classe = form.classe.value.trim();
+                var partecipazione = form.partecipazione.value;
 
-        var currentMessageIndex = 0;
+                if (cognome === '' || classe === '' || partecipazione === '') {
+                    alert('Si prega di compilare tutti i campi.');
+                    return false;
+                }
 
-        function displayFallbackMessage() {
-            alert("Errore nel caricamento dell'immagine della mascotte. Verifica il percorso e l'estensione del file.");
-        }
+                // Mostra il messaggio "Risposta inviata"
+                document.getElementById('rispostaInviata').innerHTML = 'Risposta inviata!';
 
-        function changeText() {
-            var mascotText = document.getElementById("mascotText");
-            var centerButton = document.getElementById("centerButton");
-
-            // Controlla se l'indice è all'ultima posizione nell'array
-            if (currentMessageIndex < messages.length - 1) {
-                // Incrementa l'indice per il prossimo clic
-                currentMessageIndex++;
+                // Blocca l'invio del form
+                return false;
             }
-
-            // Cambia il testo con il messaggio corrispondente
-            mascotText.innerHTML = messages[currentMessageIndex];
-
-            // Mostra il bottone al centro dopo il secondo clic sugli span
-            if (currentMessageIndex === 1) {
-                centerButton.style.display = "inline-block";
-            }
-        }
-
-        function redirectToNextPage() {
-            // Cambia l'URL con l'URL della prossima pagina
-            window.location.href = "pag1";
-        }
-    </script>
+        </script>
+    </form>
 
 </body>
 </html>
